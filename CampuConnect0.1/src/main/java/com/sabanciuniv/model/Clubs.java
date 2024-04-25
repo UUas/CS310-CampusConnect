@@ -1,21 +1,45 @@
 package com.sabanciuniv.model;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public class Clubs {
+    
+    
+    @Id
+    private String clubID;
+    
     private String clubName;
-    private int clubID;
+    
     private String clubPresident;
     private List<String> authorizedMembers;
     private List<String> clubEvents;
 
     // Constructor
-    public Clubs(String clubName, int clubID, String clubPresident) {
+    public Clubs(String clubName, String clubID, String clubPresident) {
         this.clubName = clubName;
         this.clubID = clubID;
         this.clubPresident = clubPresident;
         this.authorizedMembers = new ArrayList<>();
         this.clubEvents = new ArrayList<>();
+    }
+    
+    
+    
+    public Clubs(String clubName, String clubPresident, List<String> authorizedMembers, List<String> clubEvents) {
+		super();
+		this.clubName = clubName;
+		this.clubPresident = clubPresident;
+		this.authorizedMembers = authorizedMembers;
+		this.clubEvents = clubEvents;
+	}
+
+
+
+	public Clubs() {
+    	
     }
 
     // Getter and Setter methods
@@ -27,11 +51,11 @@ public class Clubs {
         this.clubName = clubName;
     }
 
-    public int getClubID() {
+    public String getClubID() {
         return clubID;
     }
 
-    public void setClubID(int clubID) {
+    public void setClubID(String clubID) {
         this.clubID = clubID;
     }
 

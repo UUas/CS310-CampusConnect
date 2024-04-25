@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sabanciuniv.Application;
 import com.sabanciuniv.model.Event;
-import com.sabanciuniv.payload.EventId;
 import com.sabanciuniv.payload.EventPayload;
+import com.sabanciuniv.payload.Id;
 import com.sabanciuniv.repository.EventRepo;
 
 
@@ -34,31 +34,31 @@ public class EventController {
 	}
 	
 	@PostMapping("/geteventid")
-	public Event getEventID(@RequestBody EventId id) {
-		logger.info(LocalDateTime.now() + " User info is requested for user with ID: " + id.getId());
+	public Event getEventID(@RequestBody Id id) {
+		logger.info(LocalDateTime.now() + " Event info is requested for event with ID: " + id.getId());
 		
-		List<Event> userList = eventRepo.findByEventId(id.getId());
+		List<Event> eventList = eventRepo.findByEventId(id.getId());
 		Event event = new Event();
-		event = userList.get(0);
+		event = eventList.get(0);
 		return event;
 	}
 	
 	
 	@PostMapping("/createevent")
-	public EventId createUser(@RequestBody EventPayload eventToAdd) { //UserToAdd
-		logger.info(LocalDateTime.now() + " User Requested adding new user to database with name: " + eventToAdd.getEventName());
+	public Id createUser(@RequestBody EventPayload eventToAdd) { //UserToAdd
+		logger.info(LocalDateTime.now() + " User Requested adding new event to database with name: " + eventToAdd.getEventName());
 		
 		
 		Event event = eventRepo.insert(new Event(eventToAdd.getEventName(),eventToAdd.getLocation(),eventToAdd.getDate(),eventToAdd.getTopic(),eventToAdd.getText(),eventToAdd.getClub()));
 		
 		logger.info("User added with Id: " + event.getEventId());
 		
-		EventId eventIdMessage = new EventId(event.getEventId());
+		Id eventIdMessage = new Id(event.getEventId());
 		return eventIdMessage;
 	}
 	
 	@GetMapping("/getallevents")
-	public List<Event> getAllUsers(){
+	public List<Event> getAllEvents(){
 		return eventRepo.findAll();
 	}
 	
