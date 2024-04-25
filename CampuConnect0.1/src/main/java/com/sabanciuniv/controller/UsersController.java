@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sabanciuniv.Application;
-import com.sabanciuniv.model.Event;
 import com.sabanciuniv.model.Users;
-import com.sabanciuniv.payload.EventId;
-import com.sabanciuniv.payload.EventPayload;
-import com.sabanciuniv.payload.UserId;
+import com.sabanciuniv.payload.Id;
 import com.sabanciuniv.payload.UserPayload;
 import com.sabanciuniv.repository.UserRepo;
 
@@ -30,7 +27,7 @@ public class UsersController {
 	
 	
 	@PostMapping("/geteuserid")
-	public Users getUserID(@RequestBody UserId id) {
+	public Users getUserID(@RequestBody Id id) {
 		logger.info(LocalDateTime.now() + " User info is requested for user with ID: " + id.getId());
 		
 		List<Users> userList = userRepo.findByUserId(id.getId());
@@ -40,7 +37,7 @@ public class UsersController {
 	}
 	
 	@PostMapping("/createuser")
-	public UserId createUser(@RequestBody UserPayload userToAdd) { //UserToAdd
+	public Id createUser(@RequestBody UserPayload userToAdd) { //UserToAdd
 		logger.info(LocalDateTime.now() + " User Requested adding new user to database with name: " + userToAdd.getName());
 		
 		
@@ -48,7 +45,7 @@ public class UsersController {
 		
 		logger.info("User added with Id: " + user.getUserId());
 		
-		UserId userIdMessage = new UserId(user.getUserId());
+		Id userIdMessage = new Id(user.getUserId());
 		return userIdMessage;
 	}
 	
